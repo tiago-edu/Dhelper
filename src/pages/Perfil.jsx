@@ -1,5 +1,6 @@
 import React from "react";
 import Nav from "../components/Nav";
+import { Link } from "react-router-dom";
 
 const Perfil = () => {
   return (
@@ -36,9 +37,7 @@ const Perfil = () => {
               and records all of his own music, giving it a warm, intimate feel
               with a solid groove structure. An artist of considerable range.
             </p>
-            <button class="text-indigo-500 py-2 px-4  font-medium mt-4">
-              Exit
-            </button>
+            <Link to="/login" className={`text-indigo-500 py-2 px-4 font-medium mt-4 text-center`}>Exit</Link>
           </div>
         </div>
       </div>

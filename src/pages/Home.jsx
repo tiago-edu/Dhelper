@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <Nav />
-      <div className={`h-5/6 w-screen ${styles.center}`}>
+      <div className={`h-5/6 mb-10 ${styles.center}`}>
         <div className={`${styles.border} w-10/12 bg-white h-full`}>
           <ul className={`flex justify-center flex-wrap`}>
             {places.map((item) => (
