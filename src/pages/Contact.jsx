@@ -7,7 +7,8 @@ const Contact = () => {
       <Nav />
       <div className={`h-5/6 w-screen ${styles.rowCenter}`}>
         <div
-          className={`${styles.border} ${styles.rowCenter} items-center w-2/5 bg-white h-full p-12 gap-48`}
+          className={`${styles.border} ${styles.rowCenter} items-center sm:w-1/3  min-w-1/5 h-full p-6 sm:p-12  gap-4 sm:gap-12 bg-white mb-10`}
+
         >
           <div className={`${styles.column} text-black w-4/5 gap-2`}>
             <h2 className="text-center text-xl font-black">Contato</h2>

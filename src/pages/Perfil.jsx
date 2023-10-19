@@ -6,7 +6,7 @@ const Perfil = () => {
   return (
     <div>
       <Nav />
-      <div class="px-16">
+      <div class="px-16 mb-12">
         <div class="p-8 bg-white shadow mt-24 rounded-xl">
           <div class="grid grid-cols-1 md:grid-cols-3">
             <div class="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0"></div>

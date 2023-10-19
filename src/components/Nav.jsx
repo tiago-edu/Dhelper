@@ -3,19 +3,23 @@ import { Link } from "react-router-dom";
 import { styles } from "../utils/styles";
 import Search from "../components/Search";
 
-
-
 const NavLinks = () => (
   <>
-    <Link to="/">
-      Places
+    <Link to="/">Places</Link>
+
+    <Link to="/about" className="">
+      Us
     </Link>
-    
-    <Link to="/about" className="">Us</Link>
     <Link to="/contact">Contact</Link>
-    <Link to="/perfil">
-      <img src="https://picsum.photos/40" className="rounded-[100px]" alt="Profile" />
-    </Link>
+    <div className={`hidden md:block`}>
+      <Link to="/perfil">
+        <img
+          src="https://picsum.photos/40"
+          className="rounded-[100px]"
+          alt="Profile"
+        />
+      </Link>
+    </div>
   </>
 );
 
@@ -26,6 +30,11 @@ const Nav = () => {
     setActive(!active);
   };
 
+  const handleBLue = () => {
+    setTimeout(() => {
+      setActive(false);
+    }, 100);
+  };
   return (
     <nav className="text-white p-4 mb-24">
       <div className={`${styles.row} justify-between`}>
@@ -49,17 +58,18 @@ const Nav = () => {
         </div>
         <div className="md:hidden">
           <button
-            id="menu-button"  
+            id="menu-button"
             className="focus:outline-none"
             onClick={handleClick}
             aria-label="Menu"
+            onBlur={handleBLue}
           >
             <img src="icons8-menu.svg" alt="Menu Icon" />
           </button>
           <div className={`group relative ${active ? "block" : "hidden"}`}>
             <div id="dropdown" className={`${styles.dropdown}`}>
               <NavLinks />
-              <Link to="/contact" className="block">
+              <Link to="/perfil" className="block">
                 Perfil
               </Link>
             </div>

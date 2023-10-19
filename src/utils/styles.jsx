@@ -11,7 +11,7 @@ export const styles = {
     label:`text-sm font-medium text-gray-700 tracking-wide`,
     h1: `text-3xl font-semibold mb-4 text-gray-700 tracking-wide`,
     button: `text-white absolute right-2.5 bottom-1.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800`,
-    dropdown: `absolute right-0 mt-2 bg-gray-800 text-white p-2 space-y-2 transition-transform transform translate-x-0 md:translate-x-full`,
+    dropdown: `absolute right-0 mt-2 bg-gray-800 text-white p-2 space-y-2 transition-transform transform translate-x-0 md:translate-x-full flex flex-col z-40`,
     border: `border-none rounded-xl shadow-xl`,
     arrowButton: `bg-none border-4 rounded-full hover:bg-gray-100`
   };
