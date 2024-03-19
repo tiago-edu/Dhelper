@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { styles } from "../utils/styles";
-import Search from "../components/Search";
+
 
 const NavLinks = () => (
   <>
@@ -36,7 +36,7 @@ const Nav = () => {
     }, 100);
   };
   return (
-    <nav className="text-white p-4 mb-24">
+    <nav className="text-white p-4">
       <div className={`${styles.row} justify-between`}>
         <div className="flex gap-24 items-baseline">
           <div>
@@ -45,7 +45,7 @@ const Nav = () => {
             </Link>
           </div>
           <div className={`md:flex ${active ? "hidden" : "hidden"} md:block`}>
-            <Search />
+          
           </div>
         </div>
 
@@ -76,9 +76,7 @@ const Nav = () => {
           </div>
         </div>
       </div>
-      <div className={`md:hidden m-10`}>
-        <Search />
-      </div>
+
     </nav>
   );
 };
