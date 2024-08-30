@@ -1,3 +1,25 @@
+// Museu Oscar Niemeyer (MON) - Fotos
+import MON_Cafe from '../assets/images/MON/MON_Cafe.webp';
+import MON_Cima from '../assets/images/MON/MON_Cima.jpg';
+import MON_Escultura from '../assets/images/MON/MON_Escultura.webp';
+import MON_Frente from '../assets/images/MON/MON_Frente.jpeg';
+import MON_Noite from '../assets/images/MON/MON_Noite.jpeg';
+
+// Parque Barigui - Fotos
+import Barigui_Aerea from '../assets/images/Barigui/Arvores_Dia.jpg';
+import Barigui_Cara_Correndo from '../assets/images/Barigui/Cara_Correndo.jpg';
+import Barigui_Fauna from '../assets/images/Barigui/Fauna_Barigui.jpg';
+import Barigui_Predios from '../assets/images/Barigui/Predios_Barigui.jpg';
+import Barigui_Predios_Noite from '../assets/images/Barigui/Predios_Noite.jpg';
+
+// Jardim Botânico de Curitiba
+import Ceu from '../assets/images/JardimBotanico/Ceu.jog.jpg';
+import Chao from '../assets/images/JardimBotanico/Chao.jpg';
+import Flor_Vermelha from '../assets/images/JardimBotanico/Flor_Vermelha.jpg';
+import Flores_Amarelas from '../assets/images/JardimBotanico/Flores_Amarelas.jpg';
+import Monumento_Principal from '../assets/images/JardimBotanico/Monumento_Principal.jpg';
+
+
 export const places = 
   [
     {
@@ -9,6 +31,9 @@ export const places =
       telefone: "+55 41 3264-6994",
       nota: 4.8,
       placeId: "ChIJZW0jbP_k3JQRhKfaYzO_udw",
+      fotos: 
+        [Ceu, Chao, Flor_Vermelha, Flores_Amarelas, Monumento_Principal
+      ],
     },
     {
       img: "https://picsum.photos/220/130",
@@ -18,6 +43,9 @@ export const places =
       telefone: "+55 41 3350-4400",
       nota: 4.8,
       placeId: "ChIJFWlvqB_k3JQR7jsyAF9M8vU",
+      fotos: 
+        [MON_Cafe, MON_Cima, MON_Escultura, MON_Frente, MON_Noite  
+      ],
     },
     {
       img: "https://picsum.photos/220/130",
@@ -64,6 +92,9 @@ export const places =
       telefone: "+55 41 3350-9928",
       nota: 4.8,
       placeId: "ChIJp1_LiN_j3JQRUx7PRRpC7WQ",
+      fotos: 
+        [Barigui_Aerea, Barigui_Cara_Correndo, Barigui_Fauna, Barigui_Predios, Barigui_Predios_Noite
+      ],
     },
     {
       img: "https://picsum.photos/220/130",

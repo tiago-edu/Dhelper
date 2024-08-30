@@ -5,8 +5,25 @@ import { places } from "../utils/constants";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from 'swiper/modules';
+import { EffectCoverflow } from 'swiper/modules';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import "swiper/css";
+import 'swiper/swiper-bundle.css';
+import 'swiper/css/effect-coverflow';
 const Home = () => {
+
+  // const [activeIndex, setActiveIndex] = useState(0);
+    
+  // const handleSlideChange = (swiper) => {
+  //   // e.preventDefault();
+    
+  //   setActiveIndex(swiper.activeIndex);
+  //   // console.log(swiper.activeIndex)
+  // };
+
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
@@ -24,7 +41,7 @@ const Home = () => {
   const handleInputChange = (e) => {
     setSearch(e.target.value);
   };
-
+'1'
   const filteredPlaces = places
     .flat()
     .filter((item) => item.name?.toLowerCase().includes(search?.toLowerCase()));
@@ -50,7 +67,7 @@ const Home = () => {
       <Nav />
 
       <div>
-      <Modal
+        <Modal
           className={`flex justify-center items-center`}
           open={open}
           onClose={handleClose}
@@ -61,7 +78,7 @@ const Home = () => {
             className={`${styles.borderInside} flex  items-center h-3/4 w-1/2 bg-white text-black`}
           >
             {selectedPlace && (
-              <div className={`${styles.column} w-full mx-6`}>
+              <div className={`${styles.column} w-full`}>
                 <div className={`w-1/2`}>
                   <Typography
                     sx={{ fontFamily: "Open Sans", fontWeight: "800" }}
@@ -69,12 +86,15 @@ const Home = () => {
                   >
                     {selectedPlace.name}
                   </Typography>
-                  <div className={`flex items-end`}>
-                    <Typography
-                      sx={{ fontFamily: "Open Sans", fontWeight: "800" }}
-                    >
-                      {selectedPlace.nota}
-                    </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: "Open Sans",
+                      fontWeight: "800",
+                      display: "flex",
+                      flexDirection: "row",
+                    }}
+                  >
+                    {selectedPlace.nota}
                     <svg
                       width="20" // Ajuste a largura conforme necessário
                       height="20"
@@ -87,31 +107,45 @@ const Home = () => {
                         style={{ verticalAlign: "middle" }}
                       ></path>
                     </svg>
-                  </div>
+                  </Typography>
                 </div>
-                <div className={`w-1/2 h-1/2`}>
-                  {/* <img className={``} src={selectedPlace.img} alt={selectedPlace.name} /> */}
+                <div className={`w-full`}>
+                  <Swiper
+                      slidesPerView={3}
+                      navigation={true}
+                      pagination={true}
+                      modules={[Navigation, EffectCoverflow, Pagination]}
+                      effect="coverflow" 
+                      loop={true}
+                      className='bg-gray-200 my-8'
+                      
+                      
+                    >
+                      {selectedPlace.fotos.map((foto, index) => (
+                        <SwiperSlide key={index}>
+                          <img
+                            src={foto}
+                            alt={`Slide ${index + 1}`}
+                            
+                          />
+                         
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </div>
+
+
+                <div className={`h-1/2 flex-row flex`}>
                   <Typography
+                    className='w-1/2'
                     sx={{ fontFamily: "Open Sans", fontWeight: "600" }}
-                    variant="body1"
+                    
                   >
                     {selectedPlace.desc}
                     <h2>Contato: {selectedPlace.telefone}</h2>
                   </Typography>
-                  {/* <iframe
-                    width="450"
-                    height="250"
-                    frameborder="0"
-                    style={{ border: 0, borderRadius: "10px"}}
-                    referrerpolicy="no-referrer-when-downgrade"
-                    src={googleMapsUrls.map((url) => url.url)}
-                  ></iframe> */}
-
-                  {places.map((place, index) => (
-                    <div key={index}>
-                      <Mapa place={place} />
-                    </div>
-                  ))}
+                  {/* Renderizar apenas o mapa do local selecionado */}
+                  <Mapa place={selectedPlace}/>
                 </div>
               </div>
             )}
@@ -135,9 +169,12 @@ const Home = () => {
             />
           </div>
         </div>
-
-        <div className={`${styles.border} w-10/12 bg-white h-full`}>
-          <ul className={`flex justify-center flex-row flex-wrap`}>
+<div className="div">
+  
+</div>
+        <div className={`${styles.border}`}>
+        <div className={`${styles.mainContainer}`}>
+          <ul className={``}>
             {filteredPlaces.length === 0 ? (
               <h1 className={`${styles.h1}`}>
                 Não há resultados que correspondam à sua pesquisa
@@ -146,7 +183,7 @@ const Home = () => {
               filteredPlaces.map((item, index) => (
                 <li key={index}>
                   <div
-                    className={`${styles.zoom} ${styles.borderInside} flex items-end  gap-4 m-4 w-64 h-48`}
+                    className={``}
                     style={{
                       backgroundImage: `url(${item.img})`,
                       backgroundSize: "cover",
@@ -154,9 +191,7 @@ const Home = () => {
                     }}
                     onClick={() => handleOpen(item)}
                   >
-                    <h1
-                      className={`font-namePlace font-extrabold text-2xl p-4`}
-                    >
+                    <h1 className={`font-namePlace font-extrabold text-2xl`}>
                       {item.name}
                     </h1>
                   </div>
@@ -164,6 +199,7 @@ const Home = () => {
               ))
             )}
           </ul>
+        
           <div className={`${styles.center} gap-4 m-4`}>
             <button type="button" className={`${styles.arrowButton}`}>
               <img src="left-arrow.png" alt="left-arrow" className="p-2" />
@@ -171,6 +207,7 @@ const Home = () => {
             <button type="button" className={`${styles.arrowButton}`}>
               <img src="right-arrow.png" alt="right-arrow" className="p-2" />
             </button>
+          </div>
           </div>
         </div>
       </div>

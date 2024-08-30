@@ -6,7 +6,7 @@ export const styles = {
     rowCenter: `flex flex-row justify-center flex-wrap`,
     columnCenter: `flex flex-col justify-center items-center`,
     transformY: `hover:-translate-y-11 transition duration-300 cursor-pointer`,
-    zoom: `hover:scale-105 transition duration-300 cursor-pointer`,
+    zoom: `lg:hover:scale-105 transition duration-300 cursor-pointer`,
     input: `block w-full p-4 h-10 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500`,
     label:`text-sm font-medium text-gray-700 tracking-wide`,
     h1: `text-3xl font-semibold mb-4 text-gray-700 tracking-wide`,
@@ -15,6 +15,7 @@ export const styles = {
     border: `border-none rounded-2xl shadow-xl`,
     borderInside: `border-none rounded-xl shadow-xl`,
     arrowButton: `bg-none border-4 rounded-full hover:bg-gray-100`,
+    mainContainer: `bg-white`,
   };
   
 
