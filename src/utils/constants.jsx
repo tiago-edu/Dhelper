@@ -29,7 +29,6 @@ export const places =
       endereco:
         "R. Engo. Ostoja Roguski, s/n - Jardim Botânico, Curitiba - PR, 80210-390",
       telefone: "+55 41 3264-6994",
-      nota: 4.8,
       placeId: "ChIJZW0jbP_k3JQRhKfaYzO_udw",
       fotos: 
         [Ceu, Chao, Flor_Vermelha, Flores_Amarelas, Monumento_Principal

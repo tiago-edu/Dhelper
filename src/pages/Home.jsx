@@ -15,14 +15,6 @@ import 'swiper/swiper-bundle.css';
 import 'swiper/css/effect-coverflow';
 const Home = () => {
 
-  // const [activeIndex, setActiveIndex] = useState(0);
-    
-  // const handleSlideChange = (swiper) => {
-  //   // e.preventDefault();
-    
-  //   setActiveIndex(swiper.activeIndex);
-  //   // console.log(swiper.activeIndex)
-  // };
 
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -152,7 +144,6 @@ const Home = () => {
           </Box>
         </Modal>
       </div>
-
       <div className={`h-5/6 mb-10 flex flex-col ${styles.center}`}>
         <div className="m-8">
           <div className="relative">
@@ -169,12 +160,9 @@ const Home = () => {
             />
           </div>
         </div>
-<div className="div">
-  
-</div>
         <div className={`${styles.border}`}>
         <div className={`${styles.mainContainer}`}>
-          <ul className={``}>
+          <ul className={`${styles.card}`}>
             {filteredPlaces.length === 0 ? (
               <h1 className={`${styles.h1}`}>
                 Não há resultados que correspondam à sua pesquisa
@@ -183,12 +171,8 @@ const Home = () => {
               filteredPlaces.map((item, index) => (
                 <li key={index}>
                   <div
-                    className={``}
-                    style={{
-                      backgroundImage: `url(${item.img})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
+                    className={`${styles.img} ${styles.zoom}`}
+                    style={{backgroundImage: `url(${item.img})`}}
                     onClick={() => handleOpen(item)}
                   >
                     <h1 className={`font-namePlace font-extrabold text-2xl`}>
