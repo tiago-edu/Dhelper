@@ -18,5 +18,6 @@ export const styles = {
   mainContainer: `bg-white flex flex-col w-5/6`,
   gridContainer: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4`, // Define a grid com responsividade
   card: `bg-white flex flex-wrap justify-center p-6 gap-4`,
-  img: `bg-cover bg-center h-56 w-64 md:h-56 md:w-64 sm:w-52 sm:h-56 cursor-pointer`,
+  img: `shadow-[inset_0px_-85px_58px_-47px_rgba(0,0,0,0.69)] rounded-xl bg-cover bg-center h-56 w-64 md:h-56 md:w-64 sm:w-52 sm:h-56 cursor-pointer`,
+  cardH1: `font-namePlace font-extrabold text-2xl pb-3 pl-3`,
 };

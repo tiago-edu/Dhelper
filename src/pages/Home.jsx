@@ -170,15 +170,17 @@ const Home = () => {
             ) : (
               filteredPlaces.map((item, index) => (
                 <li key={index}>
+                  
                   <div
-                    className={`${styles.img} ${styles.zoom}`}
+                    className={`${styles.img} ${styles.zoom} flex items-end`}
                     style={{backgroundImage: `url(${item.img})`}}
                     onClick={() => handleOpen(item)}
                   >
-                    <h1 className={`font-namePlace font-extrabold text-2xl`}>
+                    <h1 className={`${styles.cardH1}`}>
                       {item.name}
                     </h1>
                   </div>
+                  
                 </li>
               ))
             )}
