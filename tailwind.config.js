@@ -3,8 +3,11 @@ export default {
   content: ["./src/**/*.{react,vite,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
-      fontFamily: {
-        namePlace: ["Open Sans", ]
+      screens: {
+        xl: "1200px",
+        fontFamily: {
+          namePlace: ["Open Sans"],
+        },
       },
     },
   },

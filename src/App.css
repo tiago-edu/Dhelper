@@ -3,3 +3,14 @@
   max-height: 100%;
   
 }
+
+iframe {
+  width: 85%; /* Valor padrão */
+  height: 250px;
+}
+
+@media (min-width: 1200px) {
+  iframe {
+    width: 75%; /* Quando a tela for maior ou igual a 1200px */
+  }
+}
