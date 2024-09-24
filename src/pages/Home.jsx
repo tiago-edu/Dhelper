@@ -3,11 +3,9 @@ import Nav from "../components/Nav";
 import { styles } from "../utils/styles";
 import { places } from "../utils/constants";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { EffectCoverflow } from "swiper/modules";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css";
@@ -66,14 +64,12 @@ const Home = () => {
           aria-describedby="modal-modal-description"
         >
           <Box
-            className={`${styles.borderInside} flex h-[90%] p-4 w-full xl:w-5/6 bg-white text-black absolute bottom-0 xl:relative overflow-auto`}
+            className={`${styles.borderInside} flex h-[90%] p-4 w-full xl:w-5/6 bg-white text-black absolute bottom-0 xl:relative scrollbar-hide overflow-auto`}
           >
             {selectedPlace && (
               <div className={`${styles.column} w-full gap-8`}>
                 <div className="xl:pl-[13%]">
-                  <p>
-                    {selectedPlace.name}
-                  </p>
+                  <p>{selectedPlace.name}</p>
                   <p>
                     {selectedPlace.nota}
                     {/* por aqui jpg da estrela da nota  */}
@@ -119,7 +115,7 @@ const Home = () => {
           </Box>
         </Modal>
       </div>
-      <div className={`h-5/6 mb-10 flex flex-col ${styles.center}`}>
+      <div className={`h-5/6 flex flex-col ${styles.center}`}>
         <div className="m-8">
           <div className="relative">
             <div className="absolute inset-y-0 flex items-center pl-3">
@@ -157,14 +153,14 @@ const Home = () => {
               )}
             </ul>
 
-            <div className={`${styles.center} gap-4 m-4`}>
+            {/* <div className={`${styles.center} gap-4 m-4`}>
               <button type="button" className={`${styles.arrowButton}`}>
                 <img src="left-arrow.png" alt="left-arrow" className="p-2" />
               </button>
               <button type="button" className={`${styles.arrowButton}`}>
                 <img src="right-arrow.png" alt="right-arrow" className="p-2" />
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

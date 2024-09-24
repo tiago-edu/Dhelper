@@ -172,5 +172,5 @@ export const places =
       telefone: "+55 41 3350-4468",
       nota: 4.8,
       placeId: "ChIJ9c4QPc7m3JQRrKNNMmH",
-    },
+    }
 ];

@@ -26,7 +26,7 @@ const Us = () => {
             <img
               src="https://picsum.photos/180/180"
               className="rounded-[100px]  mb-10"
-              alt="Ranyel_Perfil"
+              alt="Yuri_Perfil"
             />
             <h2 className="text-black text-center	">CEO & Back-End Developer</h2>
           </div>
@@ -36,7 +36,7 @@ const Us = () => {
             Somos uma empresa autônoma que estava em busca de uma ideia que
             poderia ajudar uma minoria trazendo mais acessibilidade há essas
             pessoas. Pensando em problemas atuais da sociedade nossa equipe
-            (Tiago e Ranyel) decidiu que nosso site teria o objetivo de ajudar e
+            (Tiago e Yuri) decidiu que nosso site teria o objetivo de ajudar e
             deixar mais acessível a vida de indivíduos com deficiência. Com esse
             propósito, surgiu o DHelper, onde você pode pesquisar lugares
             acessíveis evitando a frustração de ir a um local que não possui a
