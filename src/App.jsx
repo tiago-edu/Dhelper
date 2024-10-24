@@ -1,14 +1,19 @@
 // App.jsx
-import './App.css';
-import { BrowserRouter as Router } from 'react-router-dom';
-import AppRouter from './routes/router.jsx'; 
+import "./App.css";
+import { BrowserRouter as Router } from "react-router-dom";
+import AppRouter from "./routes/router.jsx";
+import { Provider } from "react-redux";
+import store from "./redux/store.js";
+
 function App() {
   return (
-    <div className="app">
-      <Router>
-        <AppRouter />
-      </Router>
-    </div>
+    <Provider store={store}>
+      <div className="app">
+        <Router>
+          <AppRouter />
+        </Router>
+      </div>
+    </Provider>
   );
 }
 
