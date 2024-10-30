@@ -1,42 +1,93 @@
-import React from "react";
+import React, { useState } from "react";
 import { styles } from "../utils/styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../redux/userSlice";
+
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { status, error } = useSelector((state) => state.user);
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+
+    // Criação do objeto com os dados do usuário
+    const userData = { name: username, email, password };
+
+    // Despacha a ação de registro
+    const resultAction = await dispatch(registerUser(userData));
+
+    if (registerUser.fulfilled.match(resultAction)) {
+      navigate("/login");
+    }
+  };
+
   return (
-    <div class="w-full flex justify-center items-center h-screen">
+    <div className="w-full flex justify-center items-center h-screen">
       <div
-        class={`${styles.columnCenter} w-[430px] border p-8 rounded-lg shadow-xl bg-white m-4`}
+        className={`${styles.columnCenter} w-[430px] border p-8 rounded-lg shadow-xl bg-white m-4`}
       >
-        <h1 class={`${styles.h1}`}>Cadastre-se</h1>
-        <img src="/Logo dhelper.png" alt="Logo" class={`w-32 h-32 mb-4`} />
-        <form action="" class={`${styles.columnCenter} gap-y-4`}>
-          <div class="w-full">
-            <label htmlFor="username" class={`${styles.label}`}>
+        <h1 className={`${styles.h1}`}>Cadastre-se</h1>
+        <img src="/Logo dhelper.png" alt="Logo" className="w-32 h-32 mb-4" />
+        <form
+          onSubmit={handleRegister}
+          className={`${styles.columnCenter} gap-y-4`}
+        >
+          <div className="w-full">
+            <label htmlFor="username" className={`${styles.label}`}>
               Usuário
             </label>
-            <input type="text" id="username" class={`${styles.input}`} />
+            <input
+              type="text"
+              id="username"
+              className={`${styles.input}`}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
           </div>
-          <div class="w-full">
-            <label htmlFor="email" class={`${styles.label}`}>
+          <div className="w-full">
+            <label htmlFor="email" className={`${styles.label}`}>
               Email
             </label>
-            <input type="text" id="email" class={`${styles.input}`} />
+            <input
+              type="email"
+              id="email"
+              className={`${styles.input}`}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
-          <div class="w-full">
-            <label htmlFor="password" class={`${styles.label}`}>
+          <div className="w-full">
+            <label htmlFor="password" className={`${styles.label}`}>
               Senha
             </label>
-            <input type="password" id="password" class={`${styles.input}`} />
+            <input
+              type="password"
+              id="password"
+              className={`${styles.input}`}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
-          <Link
-            to="/"
-            class={`${styles.center} bg-blue-500 hover:bg-blue-600 text-white hover:text-white font-semibold py-2 mt-2 rounded-md w-full`}
+          <button
+            type="submit"
+            className={`${styles.center} bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 mt-2 rounded-md w-full`}
           >
-            Cadastrar-se
-          </Link>
-          <p class="text-sm text-gray-600 mt-2">
+            {status === "loading" ? "Registrando..." : "Cadastrar-se"}
+          </button>
+          {error && <p className="text-red-500 mt-2">{error}</p>}
+          <p className="text-sm text-gray-600 mt-2">
             Já possui uma conta?{" "}
-            <Link to="/login" class="text-blue-500">
+            <Link to="/login" className="text-blue-500">
               Clique aqui!
             </Link>
           </p>
