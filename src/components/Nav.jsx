@@ -5,6 +5,8 @@ import { styles } from "../utils/styles";
 
 const NavLinks = () => (
   <>
+    <Link to="/addplace">Adicionar</Link>
+
     <Link to="/">Places</Link>
 
     <Link to="/about" className="">
