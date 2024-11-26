@@ -8,6 +8,7 @@ import Perfil from '../pages/Perfil';
 import Contact from '../pages/Contact';
 import Home from '../pages/Home';
 import AddPlace from '../pages/AddPlace';
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const AppRouter = () => {
   return (
@@ -15,10 +16,40 @@ const AppRouter = () => {
       <Route exact path="/addplace" element={<AddPlace />} />
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/login" element={<Login />} />
-      <Route exact path="/" element={<Home />} />
+      <Route
+        exact
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
       <Route exact path="/about" element={<Us />} />
-      <Route exact path="/perfil" element={<Perfil />} />
       <Route exact path="/contact" element={<Contact />} />
+
+      {/* Rotas protegidas */}
+      <Route
+        exact
+        path="/perfil"
+        element={
+          <ProtectedRoute>
+            <Perfil />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Exemplo de rota apenas para admin */}
+      <Route
+        exact
+        path="/admin"
+        element={
+          <ProtectedRoute adminOnly={true}>
+            {/* Substitua pelo componente da página de administrador */}
+            <h1>Página de Administrador</h1>
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };
