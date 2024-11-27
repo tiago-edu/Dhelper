@@ -8,10 +8,12 @@ import Perfil from "../pages/Perfil";
 import Contact from "../pages/Contact";
 import Home from "../pages/Home";
 import ProtectedRoute from "../components/ProtectedRoute";
+import AddPlace from "../pages/AddPlace";
 
 const AppRouter = () => {
   return (
     <Routes>
+      <Route exact path="/addplace" element={<AddPlace />} />
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/login" element={<Login />} />
       <Route

@@ -20,4 +20,5 @@ export const styles = {
   card: `rounded-full bg-white flex flex-wrap justify-center px-6 py-16 gap-4`,
   img: `shadow-[inset_0px_-85px_58px_-47px_rgba(0,0,0,0.69)] rounded-xl bg-cover bg-center h-56 w-64 md:h-56 md:w-64 sm:w-52 sm:h-56 cursor-pointer`,
   cardH1: `font-namePlace font-extrabold text-2xl pb-3 pl-3`,
+  formSubmit: `w-full h-72 flex justify-center items-center`
 };
