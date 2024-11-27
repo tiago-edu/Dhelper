@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Nav from "../components/Nav";
 import { styles } from "../utils/styles";
-import { places } from "../utils/constants";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,10 +11,20 @@ import "swiper/css/pagination";
 import "swiper/css";
 import "swiper/swiper-bundle.css";
 import "swiper/css/effect-coverflow";
+import { fetchPlaces } from "../redux/placesSlice";
+
 const Home = () => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
+
+  const dispatch = useDispatch();
+  const places = useSelector((state) => state.places);
+
+  // Dispara a ação de buscar lugares ao carregar o componente
+  useEffect(() => {
+    dispatch(fetchPlaces());
+  }, [dispatch]);
 
   const handleOpen = (place) => {
     setSelectedPlace(place);
@@ -29,10 +39,10 @@ const Home = () => {
   const handleInputChange = (e) => {
     setSearch(e.target.value);
   };
-  ("1");
-  const filteredPlaces = places
-    .flat()
-    .filter((item) => item.name?.toLowerCase().includes(search?.toLowerCase()));
+
+  const filteredPlaces = places.filter((item) =>
+    item.name?.toLowerCase().includes(search?.toLowerCase())
+  );
 
   function getGoogleMapsUrl(placeId) {
     return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0&q=place_id:${placeId}`;
@@ -51,6 +61,7 @@ const Home = () => {
       ></iframe>
     );
   }
+
   return (
     <>
       <Nav />
@@ -152,15 +163,6 @@ const Home = () => {
                 ))
               )}
             </ul>
-
-            {/* <div className={`${styles.center} gap-4 m-4`}>
-              <button type="button" className={`${styles.arrowButton}`}>
-                <img src="left-arrow.png" alt="left-arrow" className="p-2" />
-              </button>
-              <button type="button" className={`${styles.arrowButton}`}>
-                <img src="right-arrow.png" alt="right-arrow" className="p-2" />
-              </button>
-            </div> */}
           </div>
         </div>
       </div>

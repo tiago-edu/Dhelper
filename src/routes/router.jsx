@@ -7,8 +7,8 @@ import Us from "../pages/Us";
 import Perfil from "../pages/Perfil";
 import Contact from "../pages/Contact";
 import Home from "../pages/Home";
-import ProtectedRoute from "../components/ProtectedRoute";
 import AddPlace from "../pages/AddPlace";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const AppRouter = () => {
   return (
