@@ -13,7 +13,15 @@ import ProtectedRoute from "../components/ProtectedRoute";
 const AppRouter = () => {
   return (
     <Routes>
-      <Route exact path="/addplace" element={<AddPlace />} />
+      <Route
+        exact
+        path="/addplace"
+        element={
+          <ProtectedRoute adminOnly={true}>
+            <AddPlace />
+          </ProtectedRoute>
+        }
+      />
       <Route exact path="/register" element={<Register />} />
       <Route exact path="/login" element={<Login />} />
       <Route

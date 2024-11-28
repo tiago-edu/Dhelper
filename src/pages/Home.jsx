@@ -19,7 +19,9 @@ const Home = () => {
   const [selectedPlace, setSelectedPlace] = useState(null);
 
   const dispatch = useDispatch();
-  const places = useSelector((state) => state.places);
+
+  // Obter os lugares do Redux
+  const { data: places, loading, error } = useSelector((state) => state.places);
 
   // Dispara a ação de buscar lugares ao carregar o componente
   useEffect(() => {
@@ -40,12 +42,14 @@ const Home = () => {
     setSearch(e.target.value);
   };
 
-  const filteredPlaces = places.filter((item) =>
-    item.name?.toLowerCase().includes(search?.toLowerCase())
-  );
+  const filteredPlaces = Array.isArray(places)
+    ? places.filter((item) =>
+        item.name?.toLowerCase().includes(search?.toLowerCase())
+      )
+    : [];
 
   function getGoogleMapsUrl(placeId) {
-    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0&q=place_id:${placeId}`;
+    return `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_API_KEY&q=place_id:${placeId}`;
   }
 
   function Mapa({ place }) {
@@ -60,6 +64,18 @@ const Home = () => {
         src={url}
       ></iframe>
     );
+  }
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div>Erro ao carregar lugares: {error}</div>;
+  }
+
+  function getFullImagePath(filePath) {
+    return `http://localhost:3000${filePath}`;
   }
 
   return (
@@ -81,13 +97,9 @@ const Home = () => {
               <div className={`${styles.column} w-full gap-8`}>
                 <div className="xl:pl-[13%]">
                   <p>{selectedPlace.name}</p>
-                  <p>
-                    {selectedPlace.nota}
-                    {/* por aqui jpg da estrela da nota  */}
-                  </p>
+                  <p>{selectedPlace.nota}</p>
                 </div>
                 <div className={`w-full`}>
-                  {/* Swiper dos locais */}
                   <Swiper
                     slidesPerView={1}
                     pagination={{ clickable: true }}
@@ -103,7 +115,7 @@ const Home = () => {
                       >
                         <img
                           className="xl:w-3/4"
-                          src={foto}
+                          src={getFullImagePath(foto)}
                           alt={`Slide ${index + 1}`}
                         />
                       </SwiperSlide>
@@ -111,14 +123,12 @@ const Home = () => {
                   </Swiper>
                 </div>
                 <div className="xl:px-[13%]">
-                  {/* Descrição do Local */}
-                  <p>
-                    {selectedPlace.desc}
+                  <div>
+                    <p>{selectedPlace.desc}</p>
                     <h2>Contato: {selectedPlace.telefone}</h2>
-                  </p>
+                  </div>
                 </div>
                 <div className="pb-6 flex justify-center">
-                  {/* Renderizar apenas o mapa do local selecionado */}
                   <Mapa place={selectedPlace} />
                 </div>
               </div>
@@ -154,7 +164,9 @@ const Home = () => {
                   <li key={index}>
                     <div
                       className={`${styles.img} ${styles.zoom} flex items-end`}
-                      style={{ backgroundImage: `url(${item.img})` }}
+                      style={{
+                        backgroundImage: `url(${getFullImagePath(item.img)})`,
+                      }}
                       onClick={() => handleOpen(item)}
                     >
                       <h1 className={`${styles.cardH1}`}>{item.name}</h1>

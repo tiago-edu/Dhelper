@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Criação da instância do axios com configurações básicas
 const api = axios.create({
-  baseURL: "https://dhelper-api.vercel.app/",
+  baseURL: "http://localhost:3000/",
   timeout: 10000,
 });
 

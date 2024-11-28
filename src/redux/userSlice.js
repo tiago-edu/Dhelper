@@ -25,12 +25,15 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await api.post("/users/login", { email, password });
-      localStorage.setItem("token", response.data.token); // Salva o token
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.role);
+
       return response.data;
     } catch (error) {
       console.error("Erro ao efetuar login:", error);
       return rejectWithValue(
-        error.response.data.message || "Erro ao efetuar login."
+        error.response?.data?.message || "Erro ao efetuar login."
       );
     }
   }
@@ -120,7 +123,7 @@ const userSlice = createSlice({
   reducers: {
     logoutUser: (state) => {
       state.currentUser = null;
-      localStorage.removeItem("token"); // Remove o token ao fazer logout
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
