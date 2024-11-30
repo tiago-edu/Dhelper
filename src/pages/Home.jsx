@@ -49,7 +49,7 @@ const Home = () => {
     : [];
 
   function getGoogleMapsUrl(placeId) {
-    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0&q=place_id:${placeId}`;
+    return `https://www.google.com/maps/embed/v1/place?key=SEU_GOOGLE_MAPS_API_KEY&q=place_id:${placeId}`;
   }
 
   function Mapa({ place }) {
@@ -72,10 +72,6 @@ const Home = () => {
 
   if (error) {
     return <div>Erro ao carregar lugares: {error}</div>;
-  }
-
-  function getFullImagePath(filePath) {
-    return `http://localhost:3000${filePath}`;
   }
 
   return (
@@ -101,35 +97,41 @@ const Home = () => {
                 </div>
                 <div className={`w-full`}>
                   <div className={`w-full`}>
-                    {selectedPlace.fotos.length > 1 ? (
-                      <Swiper
-                        slidesPerView={1}
-                        pagination={{ clickable: true }}
-                        modules={[Navigation, Pagination]}
-                        effect="coverflow"
-                        loop={selectedPlace.fotos.length > 1}
-                        className="w-full"
-                      >
-                        {selectedPlace.fotos.map((foto, index) => (
-                          <SwiperSlide
-                            key={index}
-                            className="flex justify-center items-center"
-                          >
-                            <img
-                              className="xl:w-3/4"
-                              src={getFullImagePath(foto)}
-                              alt={`Slide ${index + 1}`}
-                            />
-                          </SwiperSlide>
-                        ))}
-                      </Swiper>
+                    {selectedPlace.fotos && selectedPlace.fotos.length > 0 ? (
+                      selectedPlace.fotos.length > 1 ? (
+                        <Swiper
+                          slidesPerView={1}
+                          pagination={{ clickable: true }}
+                          modules={[Navigation, Pagination]}
+                          effect="coverflow"
+                          loop={selectedPlace.fotos.length > 1}
+                          className="w-full"
+                        >
+                          {selectedPlace.fotos.map((foto, index) => (
+                            <SwiperSlide
+                              key={index}
+                              className="flex justify-center items-center"
+                            >
+                              <img
+                                className="xl:w-3/4"
+                                src={foto}
+                                alt={`Slide ${index + 1}`}
+                              />
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
+                      ) : (
+                        <div className="flex justify-center items-center">
+                          <img
+                            className="xl:w-3/4"
+                            src={selectedPlace.fotos[0]}
+                            alt="Imagem do lugar"
+                          />
+                        </div>
+                      )
                     ) : (
                       <div className="flex justify-center items-center">
-                        <img
-                          className="xl:w-3/4"
-                          src={getFullImagePath(selectedPlace.fotos[0])}
-                          alt="Imagem do lugar"
-                        />
+                        <p>Sem imagens disponíveis.</p>
                       </div>
                     )}
                   </div>
@@ -177,7 +179,7 @@ const Home = () => {
                     <div
                       className={`${styles.img} ${styles.zoom} flex items-end`}
                       style={{
-                        backgroundImage: `url(${getFullImagePath(item.img)})`,
+                        backgroundImage: `url(${item.img})`,
                       }}
                       onClick={() => handleOpen(item)}
                     >

@@ -36,6 +36,14 @@ const AddPlace = () => {
     setFormData({ ...formData, img: e.target.files[0] });
   };
 
+  const removeImage = (index) => {
+    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setFormData({
+      ...formData,
+      fotos: formData.fotos.filter((_, i) => i !== index),
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -60,6 +68,7 @@ const AddPlace = () => {
 
     try {
       const response = await dispatch(addPlace(form)).unwrap();
+      console.log("Resposta do servidor:", response);
       setSuccessMessage(
         `Local adicionado com sucesso! Imagem disponível em: ${response.img}`
       );
