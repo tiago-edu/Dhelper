@@ -53,6 +53,11 @@ const AddPlace = () => {
     form.append("placeId", formData.placeId);
     form.append("img", formData.img);
 
+    // Adicionar múltiplas fotos
+    formData.fotos.forEach((file) => {
+      form.append("fotos", file);
+    });
+
     try {
       const response = await dispatch(addPlace(form)).unwrap();
       setSuccessMessage(
@@ -77,14 +82,6 @@ const AddPlace = () => {
       );
       setSuccessMessage(null);
     }
-  };
-
-  const removeImage = (index) => {
-    setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
-    setFormData({
-      ...formData,
-      fotos: formData.fotos.filter((_, i) => i !== index),
-    });
   };
 
   return (

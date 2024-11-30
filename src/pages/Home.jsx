@@ -49,7 +49,7 @@ const Home = () => {
     : [];
 
   function getGoogleMapsUrl(placeId) {
-    return `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_API_KEY&q=place_id:${placeId}`;
+    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0&q=place_id:${placeId}`;
   }
 
   function Mapa({ place }) {
@@ -100,27 +100,39 @@ const Home = () => {
                   <p>{selectedPlace.nota}</p>
                 </div>
                 <div className={`w-full`}>
-                  <Swiper
-                    slidesPerView={1}
-                    pagination={{ clickable: true }}
-                    modules={[Navigation, Pagination]}
-                    effect="coverflow"
-                    loop={true}
-                    className="w-full"
-                  >
-                    {selectedPlace.fotos.map((foto, index) => (
-                      <SwiperSlide
-                        key={index}
-                        className="flex justify-center items-center"
+                  <div className={`w-full`}>
+                    {selectedPlace.fotos.length > 1 ? (
+                      <Swiper
+                        slidesPerView={1}
+                        pagination={{ clickable: true }}
+                        modules={[Navigation, Pagination]}
+                        effect="coverflow"
+                        loop={selectedPlace.fotos.length > 1}
+                        className="w-full"
                       >
+                        {selectedPlace.fotos.map((foto, index) => (
+                          <SwiperSlide
+                            key={index}
+                            className="flex justify-center items-center"
+                          >
+                            <img
+                              className="xl:w-3/4"
+                              src={getFullImagePath(foto)}
+                              alt={`Slide ${index + 1}`}
+                            />
+                          </SwiperSlide>
+                        ))}
+                      </Swiper>
+                    ) : (
+                      <div className="flex justify-center items-center">
                         <img
                           className="xl:w-3/4"
-                          src={getFullImagePath(foto)}
-                          alt={`Slide ${index + 1}`}
+                          src={getFullImagePath(selectedPlace.fotos[0])}
+                          alt="Imagem do lugar"
                         />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="xl:px-[13%]">
                   <div>
