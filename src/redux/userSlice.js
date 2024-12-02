@@ -13,7 +13,7 @@ export const registerUser = createAsyncThunk(
     } catch (error) {
       console.error("Erro ao registrar o usuário:", error);
       return rejectWithValue(
-        error.response.data.message || "Erro ao registrar o usuário."
+        error.response?.data?.error || "Erro ao registrar o usuário."
       );
     }
   }
@@ -25,12 +25,46 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await api.post("/users/login", { email, password });
-      localStorage.setItem("token", response.data.token); // Salva o token
-      return response.data;
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("role", response.data.role);
+
+      // Após o login, buscamos o perfil do usuário
+      const profileResponse = await api.get("/users/profile", {
+        headers: {
+          Authorization: `Bearer ${response.data.token}`,
+        },
+      });
+
+      return {
+        user: profileResponse.data,
+        token: response.data.token,
+        role: response.data.role,
+      };
     } catch (error) {
       console.error("Erro ao efetuar login:", error);
       return rejectWithValue(
-        error.response.data.message || "Erro ao efetuar login."
+        error.response?.data?.error || "Erro ao efetuar login."
+      );
+    }
+  }
+);
+
+// Atualizar perfil do usuário logado
+export const updateProfile = createAsyncThunk(
+  "user/updateProfile",
+  async (updatedData, { rejectWithValue }) => {
+    try {
+      const response = await api.put("/users/profile", updatedData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao atualizar perfil:", error);
+      return rejectWithValue(
+        error.response?.data?.error || "Erro ao atualizar perfil."
       );
     }
   }
@@ -72,12 +106,12 @@ export const fetchUserById = createAsyncThunk(
   }
 );
 
-// Editar usuário
+// Editar usuário (administrador)
 export const editUser = createAsyncThunk(
   "user/edit",
   async ({ userId, updatedData }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/users/edit/${userId}`, updatedData, {
+      const response = await api.put(`/users/${userId}`, updatedData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -116,18 +150,21 @@ const userSlice = createSlice({
     users: [],
     status: "idle",
     error: null,
+    role: localStorage.getItem("role") || null,
   },
   reducers: {
     logoutUser: (state) => {
       state.currentUser = null;
-      localStorage.removeItem("token"); // Remove o token ao fazer logout
+      state.role = null;
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
     },
   },
   extraReducers: (builder) => {
     builder
       // Register user
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload.user;
+        state.currentUser = action.payload;
         state.status = "succeeded";
         state.error = null;
       })
@@ -138,10 +175,21 @@ const userSlice = createSlice({
       // Login user
       .addCase(loginUser.fulfilled, (state, action) => {
         state.currentUser = action.payload.user;
+        state.role = action.payload.role;
         state.status = "succeeded";
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      // Update Profile
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.currentUser = action.payload;
+        state.status = "succeeded";
+        state.error = null;
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -165,9 +213,15 @@ const userSlice = createSlice({
         state.status = "failed";
         state.error = action.payload;
       })
-      // Edit user
+      // Edit user (administrador)
       .addCase(editUser.fulfilled, (state, action) => {
-        state.currentUser = action.payload;
+        // Atualiza o usuário na lista de usuários
+        const index = state.users.findIndex(
+          (user) => user.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.users[index] = action.payload;
+        }
         state.status = "succeeded";
         state.error = null;
       })

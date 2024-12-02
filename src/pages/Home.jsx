@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Nav from "../components/Nav";
 import { styles } from "../utils/styles";
-import { places } from "../utils/constants";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,10 +11,22 @@ import "swiper/css/pagination";
 import "swiper/css";
 import "swiper/swiper-bundle.css";
 import "swiper/css/effect-coverflow";
+import { fetchPlaces } from "../redux/placesSlice";
+
 const Home = () => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
+
+  const dispatch = useDispatch();
+
+  // Obter os lugares do Redux
+  const { data: places, loading, error } = useSelector((state) => state.places);
+
+  // Dispara a ação de buscar lugares ao carregar o componente
+  useEffect(() => {
+    dispatch(fetchPlaces());
+  }, [dispatch]);
 
   const handleOpen = (place) => {
     setSelectedPlace(place);
@@ -29,13 +41,15 @@ const Home = () => {
   const handleInputChange = (e) => {
     setSearch(e.target.value);
   };
-  ("1");
-  const filteredPlaces = places
-    .flat()
-    .filter((item) => item.name?.toLowerCase().includes(search?.toLowerCase()));
+
+  const filteredPlaces = Array.isArray(places)
+    ? places.filter((item) =>
+        item.name?.toLowerCase().includes(search?.toLowerCase())
+      )
+    : [];
 
   function getGoogleMapsUrl(placeId) {
-    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0&q=place_id:${placeId}`;
+    return `https://www.google.com/maps/embed/v1/place?key=SEU_GOOGLE_MAPS_API_KEY&q=place_id:${placeId}`;
   }
 
   function Mapa({ place }) {
@@ -51,6 +65,15 @@ const Home = () => {
       ></iframe>
     );
   }
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div>Erro ao carregar lugares: {error}</div>;
+  }
+
   return (
     <>
       <Nav />
@@ -70,44 +93,56 @@ const Home = () => {
               <div className={`${styles.column} w-full gap-8`}>
                 <div className="xl:pl-[13%]">
                   <p>{selectedPlace.name}</p>
-                  <p>
-                    {selectedPlace.nota}
-                    {/* por aqui jpg da estrela da nota  */}
-                  </p>
+                  <p>{selectedPlace.nota}</p>
                 </div>
                 <div className={`w-full`}>
-                  {/* Swiper dos locais */}
-                  <Swiper
-                    slidesPerView={1}
-                    pagination={{ clickable: true }}
-                    modules={[Navigation, Pagination]}
-                    effect="coverflow"
-                    loop={true}
-                    className="w-full"
-                  >
-                    {selectedPlace.fotos.map((foto, index) => (
-                      <SwiperSlide
-                        key={index}
-                        className="flex justify-center items-center"
-                      >
-                        <img
-                          className="xl:w-3/4"
-                          src={foto}
-                          alt={`Slide ${index + 1}`}
-                        />
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
+                  <div className={`w-full`}>
+                    {selectedPlace.fotos && selectedPlace.fotos.length > 0 ? (
+                      selectedPlace.fotos.length > 1 ? (
+                        <Swiper
+                          slidesPerView={1}
+                          pagination={{ clickable: true }}
+                          modules={[Navigation, Pagination]}
+                          effect="coverflow"
+                          loop={selectedPlace.fotos.length > 1}
+                          className="w-full"
+                        >
+                          {selectedPlace.fotos.map((foto, index) => (
+                            <SwiperSlide
+                              key={index}
+                              className="flex justify-center items-center"
+                            >
+                              <img
+                                className="xl:w-3/4"
+                                src={foto}
+                                alt={`Slide ${index + 1}`}
+                              />
+                            </SwiperSlide>
+                          ))}
+                        </Swiper>
+                      ) : (
+                        <div className="flex justify-center items-center">
+                          <img
+                            className="xl:w-3/4"
+                            src={selectedPlace.fotos[0]}
+                            alt="Imagem do lugar"
+                          />
+                        </div>
+                      )
+                    ) : (
+                      <div className="flex justify-center items-center">
+                        <p>Sem imagens disponíveis.</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <div className="xl:px-[13%]">
-                  {/* Descrição do Local */}
-                  <p>
-                    {selectedPlace.desc}
+                  <div>
+                    <p>{selectedPlace.desc}</p>
                     <h2>Contato: {selectedPlace.telefone}</h2>
-                  </p>
+                  </div>
                 </div>
                 <div className="pb-6 flex justify-center">
-                  {/* Renderizar apenas o mapa do local selecionado */}
                   <Mapa place={selectedPlace} />
                 </div>
               </div>
@@ -143,7 +178,9 @@ const Home = () => {
                   <li key={index}>
                     <div
                       className={`${styles.img} ${styles.zoom} flex items-end`}
-                      style={{ backgroundImage: `url(${item.img})` }}
+                      style={{
+                        backgroundImage: `url(${item.img})`,
+                      }}
                       onClick={() => handleOpen(item)}
                     >
                       <h1 className={`${styles.cardH1}`}>{item.name}</h1>
@@ -152,15 +189,6 @@ const Home = () => {
                 ))
               )}
             </ul>
-
-            {/* <div className={`${styles.center} gap-4 m-4`}>
-              <button type="button" className={`${styles.arrowButton}`}>
-                <img src="left-arrow.png" alt="left-arrow" className="p-2" />
-              </button>
-              <button type="button" className={`${styles.arrowButton}`}>
-                <img src="right-arrow.png" alt="right-arrow" className="p-2" />
-              </button>
-            </div> */}
           </div>
         </div>
       </div>
