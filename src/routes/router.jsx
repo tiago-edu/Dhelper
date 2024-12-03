@@ -9,17 +9,20 @@ import Contact from "../pages/Contact";
 import Home from "../pages/Home";
 import AddPlace from "../pages/AddPlace";
 import ProtectedRoute from "../components/ProtectedRoute";
-
+import Users from "../pages/Users";
 const AppRouter = () => {
   return (
     <Routes>
+      <Route exact path="/users" element={<Users />} />
+
       <Route
         exact
         path="/addplace"
         element={
-          <ProtectedRoute adminOnly={true}>
-            <AddPlace />
-          </ProtectedRoute>
+          // <ProtectedRoute adminOnly={true}>
+          //   <AddPlace />
+          // </ProtectedRoute>
+          <AddPlace />
         }
       />
       <Route exact path="/register" element={<Register />} />

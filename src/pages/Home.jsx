@@ -48,8 +48,10 @@ const Home = () => {
       )
     : [];
 
+    //api key: AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0
+
   function getGoogleMapsUrl(placeId) {
-    return `https://www.google.com/maps/embed/v1/place?key=SEU_GOOGLE_MAPS_API_KEY&q=place_id:${placeId}`;
+    return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0&q=place_id:${placeId}`;
   }
 
   function Mapa({ place }) {

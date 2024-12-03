@@ -5,6 +5,7 @@ import { styles } from "../utils/styles";
 
 const NavLinks = () => (
   <>
+    <Link to="/users">Users</Link>
     <Link to="/addplace">Adicionar</Link>
 
     <Link to="/">Places</Link>

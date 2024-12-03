@@ -29,3 +29,7 @@ a {
 a:hover {
   color: gray;
 }
+
+p, h2, h3 {
+  color: black;
+}
