@@ -161,17 +161,11 @@ const AddPlace = () => {
           />
           <input
             type="file"
-            onChange={handleFileChange}
-            accept="image/jpeg, image/png"
-            className="w-full"
-            required
-          />
-          <input
-            type="file"
             multiple
             onChange={handleImageChange}
             accept="image/jpeg, image/png"
             className="w-full"
+            required
           />
           <div className="flex flex-wrap gap-2">
             {selectedImages.map((src, index) => (

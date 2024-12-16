@@ -11,12 +11,14 @@ import "swiper/css/pagination";
 import "swiper/css";
 import "swiper/swiper-bundle.css";
 import "swiper/css/effect-coverflow";
-import { fetchPlaces } from "../redux/placesSlice";
+import { fetchPlaces, updatePlace } from "../redux/placesSlice";
 
 const Home = () => {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [editedPlace, setEditedPlace] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -38,6 +40,47 @@ const Home = () => {
     setSelectedPlace(null);
   };
 
+  const handleEditOpen = (place) => {
+    setEditedPlace({ ...place });
+    setEditModalOpen(true);
+  };
+
+  const handleEditClose = () => {
+    setEditModalOpen(false);
+    setEditedPlace(null);
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditedPlace((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handlePhotoUpload = (e) => {
+    const files = Array.from(e.target.files);
+    const newPhotos = files.map((file) => URL.createObjectURL(file));
+
+    setEditedPlace((prev) => ({
+      ...prev,
+      fotos: [...(prev.fotos || []), ...newPhotos],
+    }));
+  };
+
+  const handleRemovePhoto = (indexToRemove) => {
+    setEditedPlace((prev) => ({
+      ...prev,
+      fotos: prev.fotos.filter((_, index) => index !== indexToRemove),
+    }));
+  };
+
+  const handleSaveEdit = () => {
+    dispatch(updatePlace(editedPlace));
+    console.log("Lugar editado:", editedPlace);
+    setEditModalOpen(false);
+  };
+
   const handleInputChange = (e) => {
     setSearch(e.target.value);
   };
@@ -48,7 +91,7 @@ const Home = () => {
       )
     : [];
 
-    //api key: AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0
+  //api key: AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0
 
   function getGoogleMapsUrl(placeId) {
     return `https://www.google.com/maps/embed/v1/place?key=AIzaSyBlgn1_G6GzE48Tg_uuf9ZhfTjy8gbZbt0&q=place_id:${placeId}`;
@@ -151,6 +194,103 @@ const Home = () => {
             )}
           </Box>
         </Modal>
+
+        {/* modal de edicao */}
+        <Modal
+          open={editModalOpen}
+          onClose={handleEditClose}
+          className="flex justify-center items-center"
+        >
+          <Box>
+            {editedPlace && (
+              <Box
+                className={`${styles.borderInside} bg-white p-6 rounded-lg`}
+              >
+                <div className="space-y-4">
+                  <h2 className="text-xl font-bold mb-4">Editar Local</h2>
+
+                  <input
+                    name="name"
+                    value={editedPlace.name || ""}
+                    onChange={handleEditChange}
+                    placeholder="Nome do Local"
+                    className={`${styles.input} w-full`}
+                  />
+
+                  <textarea
+                    name="desc"
+                    value={editedPlace.desc || ""}
+                    onChange={handleEditChange}
+                    placeholder="Descrição"
+                    className={`${styles.input} w-full h-24`}
+                  />
+
+                  <input
+                    name="telefone"
+                    value={editedPlace.telefone || ""}
+                    onChange={handleEditChange}
+                    placeholder="Telefone"
+                    className={`${styles.input} w-full`}
+                  />
+
+                  <input
+                    name="nota"
+                    value={editedPlace.nota || ""}
+                    onChange={handleEditChange}
+                    placeholder="Nota"
+                    className={`${styles.input} w-full`}
+                  />
+
+                  <div>
+                    <label className="block mb-2">Fotos</label>
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handlePhotoUpload}
+                      className="mb-4"
+                    />
+
+                    <div className="flex flex-wrap gap-2">
+                      {editedPlace.fotos &&
+                        editedPlace.fotos.map((foto, index) => (
+                          <div key={index} className="relative">
+                            <img
+                              src={foto}
+                              alt={`Foto ${index + 1}`}
+                              className="w-24 h-24 object-cover"
+                            />
+                            <button
+                              onClick={() => handleRemovePhoto(index)}
+                              className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
+                            >
+                              X
+                            </button>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between">
+                    <button
+                      onClick={handleSaveEdit}
+                      className="bg-green-500 text-white px-4 py-2 rounded"
+                    >
+                      Salvar
+                    </button>
+                    <button
+                      onClick={handleEditClose}
+                      className="bg-gray-300 text-black px-4 py-2 rounded"
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                </div>
+              </Box>
+            )}
+          </Box>
+        </Modal>
+        {/* fim modal de edicao */}
       </div>
       <div className={`h-5/6 flex flex-col ${styles.center}`}>
         <div className="m-8">
@@ -177,7 +317,7 @@ const Home = () => {
                 </h1>
               ) : (
                 filteredPlaces.map((item, index) => (
-                  <li key={index}>
+                  <li key={index} className="relative group">
                     <div
                       className={`${styles.img} ${styles.zoom} flex items-end`}
                       style={{
@@ -187,6 +327,12 @@ const Home = () => {
                     >
                       <h1 className={`${styles.cardH1}`}>{item.name}</h1>
                     </div>
+                    <button 
+                      onClick={() => handleEditOpen(item)}
+                      className="absolute top-2 right-2 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      ✏️
+                    </button>
                   </li>
                 ))
               )}
