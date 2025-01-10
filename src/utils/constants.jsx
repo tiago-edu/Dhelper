@@ -53,7 +53,7 @@ export const places = [
   {
     img: "https://picsum.photos/220/130",
     name: "Parque Tanguá",
-    desc: "O Parque Tanguá é um dos parques mais bonitos de Curitiba, com belos lagos, cascatas, trilhas para caminhada e mirantes com vista panorâmica da cidade. É um lugar ideal para relaxar, fazer um picnic ou p            raticar esportes ao ar livre.",
+    desc: "O Parque Tanguá é um dos parques mais bonitos de Curitiba, com belos lagos, cascatas, trilhas para caminhada e mirantes com vista panorâmica da cidade. É um lugar ideal para relaxar, fazer um picnic ou praticar esportes ao ar livre.",
     endereco: "R. Oswaldo Maciel, 97 - Taboão, Curitiba - PR, 82130-494",
     telefone: "+55 41 3350-8235",
     nota: 4.8,

@@ -327,13 +327,16 @@ const Home = () => {
                     >
                       <h1 className={`${styles.cardH1}`}>{item.name}</h1>
                     </div>
-                    <button 
-                      onClick={() => handleEditOpen(item)}
-                      className="absolute top-2 right-2 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      ✏️
-                    </button>
+                    {localStorage.getItem("role") === "Admin" && (
+                      <button
+                        onClick={() => handleEditOpen(item)}
+                        className="absolute top-2 right-2 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      >
+                        ✏️
+                      </button>
+                    )}
                   </li>
+
                 ))
               )}
             </ul>

@@ -13,16 +13,18 @@ import Users from "../pages/Users";
 const AppRouter = () => {
   return (
     <Routes>
-      <Route exact path="/users" element={<Users />} />
+      <Route exact path="/users" element={
+           <ProtectedRoute adminOnly={true}>
+             <Users />
+           </ProtectedRoute>} />
 
       <Route
         exact
         path="/addplace"
         element={
-          // <ProtectedRoute adminOnly={true}>
-          //   <AddPlace />
-          // </ProtectedRoute>
-          <AddPlace />
+           <ProtectedRoute adminOnly={true}>
+             <AddPlace />
+           </ProtectedRoute>
         }
       />
       <Route exact path="/register" element={<Register />} />
@@ -46,18 +48,6 @@ const AppRouter = () => {
         element={
           <ProtectedRoute>
             <Perfil />
-          </ProtectedRoute>
-        }
-      />
-
-      {/* Exemplo de rota apenas para admin */}
-      <Route
-        exact
-        path="/admin"
-        element={
-          <ProtectedRoute adminOnly={true}>
-            {/* Substitua pelo componente da página de administrador */}
-            <h1>Página de Administrador</h1>
           </ProtectedRoute>
         }
       />
