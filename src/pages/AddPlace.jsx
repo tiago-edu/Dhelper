@@ -161,16 +161,6 @@ const AddPlace = () => {
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
             required
           />
-<<<<<<< HEAD
-=======
-           <input
-            type="file"
-            onChange={handleFileChange}
-            accept="image/jpeg, image/png"
-            className="w-full"
-            required
-          />
->>>>>>> 3f60ba82f81c63a2ea59959e866b6c75cbc5826c
           <input
             type="file"
             multiple
