@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../api";
 
 // Ações assíncronas
-export const fetchPlaces = createAsyncThunk(
+export const  fetchPlaces = createAsyncThunk(
   "places/fetchPlaces",
   async (_, { rejectWithValue }) => {
     try {
@@ -26,7 +26,9 @@ export const addPlace = createAsyncThunk(
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        
       });
+      console.log("Token obtido:", token);
       return response.data;
     } catch (error) {
       console.error("Erro ao adicionar lugar:", error);

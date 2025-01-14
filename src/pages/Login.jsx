@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../redux/userSlice"; // Assumindo que você tem um action para login no Redux
 import { styles } from "../utils/styles";
-
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,22 +12,33 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError(""); // Limpa erros anteriores
+  const [showPassword, setShowPassword] = useState(false);
 
-    try {
-      const resultAction = await dispatch(loginUser({ email, password }));
-
-      if (loginUser.fulfilled.match(resultAction)) {
-        navigate("/");
-      } else {
-        setError(resultAction.payload || "Erro ao efetuar login.");
-      }
-    } catch (error) {
-      setError("Erro ao tentar efetuar login. Tente novamente.");
-    }
+  const togglePasswordVisibility = () => {
+      setShowPassword((prev) => !prev);
   };
+
+
+  const [isLoading, setIsLoading] = useState(false);
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setError("");
+  setIsLoading(true);
+
+  try {
+    const resultAction = await dispatch(loginUser({ email, password }));
+    if (loginUser.fulfilled.match(resultAction)) {
+      navigate("/");
+    } else {
+      setError(resultAction.payload || "Erro ao efetuar login.");
+    }
+  } catch (error) {
+    setError("Erro ao tentar efetuar login. Tente novamente.");
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <div className="w-full flex justify-center items-center h-screen">
@@ -57,14 +68,28 @@ const Login = () => {
             <label htmlFor="password" className={`${styles.label}`}>
               Senha
             </label>
-            <input
-              type="password"
-              id="password"
-              className={`${styles.input}`}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Digite sua senha"
+                required
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeSlashIcon className="w-5 h-5" />
+                ) : (
+                  <EyeIcon className="w-5 h-5" />
+                )}
+              </button>
+            </div>
           </div>
           <button
             type="submit"

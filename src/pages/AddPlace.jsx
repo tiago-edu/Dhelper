@@ -28,12 +28,14 @@ const AddPlace = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
-    setFormData({ ...formData, fotos: files });
-    setSelectedImages(files.map((file) => URL.createObjectURL(file)));
-  };
-
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, img: e.target.files[0] });
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      fotos: [...prevFormData.fotos, ...files],
+    }));
+    setSelectedImages((prevImages) => [
+      ...prevImages,
+      ...files.map((file) => URL.createObjectURL(file)),
+    ]);
   };
 
   const removeImage = (index) => {
@@ -157,13 +159,6 @@ const AddPlace = () => {
             onChange={handleInputChange}
             placeholder="ID do Local"
             className="w-full px-3 py-2 border border-gray-300 rounded-md"
-            required
-          />
-<input
-            type="file"
-            onChange={handleFileChange}
-            accept="image/jpeg, image/png"
-            className="w-full"
             required
           />
           <input

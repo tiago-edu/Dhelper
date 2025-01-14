@@ -301,7 +301,7 @@ const Home = () => {
             <input
               type="text"
               id="search"
-              className={`${styles.input}`}
+              className={`${styles.input} pl-10`}
               placeholder="Places..."
               value={search}
               onChange={handleInputChange}
