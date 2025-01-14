@@ -1,5 +1,3 @@
-// components/ProtectedRoute.js
-import React from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -16,7 +14,8 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
     return <Navigate to="/" />;
   }
 
-  return children;
+  // Renderiza o componente filho apenas para usuários autorizados
+  return token && (!adminOnly || userRole === "Admin") ? children : null;
 };
 
 export default ProtectedRoute;

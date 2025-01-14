@@ -3,28 +3,40 @@ import { Link } from "react-router-dom";
 import { styles } from "../utils/styles";
 
 
-const NavLinks = () => (
-  <>
-    <Link to="/users">Users</Link>
-    <Link to="/addplace">Adicionar</Link>
+const NavLinks = () => { 
 
-    <Link to="/">Places</Link>
+  const userRole = localStorage.getItem("role");
 
-    <Link to="/about" className="">
-      Us
-    </Link>
-    <Link to="/contact">Contact</Link>
-    <div className={`hidden md:block`}>
-      <Link to="/perfil">
-        <img
-          src="https://picsum.photos/40"
-          className="rounded-[100px]"
-          alt="Profile"
-        />
+
+  return (
+    <>
+      {/* Links restritos para administradores */}
+      {userRole === "Admin" && (
+          <>
+            <Link to="/users">Users</Link>
+            <Link to="/addplace">Adicionar</Link>
+          </>
+        )}
+
+      {/* Links visíveis para todos */}
+      <Link to="/">Places</Link>
+
+      <Link to="/about" className="">
+        Us
       </Link>
-    </div>
-  </>
-);
+      <Link to="/contact">Contact</Link>
+      <div className={`hidden md:block`}>
+        <Link to="/perfil">
+          <img
+            src="https://picsum.photos/40"
+            className="rounded-[100px]"
+            alt="Profile"
+          />
+        </Link>
+      </div>
+    </>
+  );
+}
 
 const Nav = () => {
   const [active, setActive] = useState(false);
@@ -85,3 +97,4 @@ const Nav = () => {
 };
 
 export default Nav;
+
