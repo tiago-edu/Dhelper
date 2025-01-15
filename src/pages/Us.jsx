@@ -13,7 +13,7 @@ const Us = () => {
         >
           <div className={`${styles.column}`}>
             <img
-              src="./public/Screenshot 2025-01-14 200733.png"
+              src="/Screenshot 2025-01-14 200733.png"
               className="w-[180px] h-[180px] rounded-full object-cover mb-10"
               alt="Tiago_Perfil"
             />
@@ -23,7 +23,7 @@ const Us = () => {
           </div>
           <div className={`${styles.column}`}>
             <img
-              src="./public/Perfil_Yuri.jpeg"
+              src="/Perfil_Yuri.jpeg"
               className="w-[180px] h-[180px] rounded-full object-cover mb-10"
               alt="Yuri_Perfil"
             />
